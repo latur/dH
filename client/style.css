@@ -1,0 +1,45 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic,cyrillic-ext,latin-ext);
+* { margin: 0; padding: 0; outline: none }
+
+html { -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+html { }
+body { background: #111; font-family: 'Open Sans', sans-serif; font-size: 12px; color: #ddd; }
+
+#page { width: 1200px; margin: auto; position: relative; padding: 50px 0 }
+#users { position: absolute; top: 7px; width: 100%; overflow: hidden; }
+	.user { float: left; margin-right: 5px; }
+	.user img { width: 30px; height: 30px; border-radius: 7px; float: left; border: 2px solid #000 }
+	.user.dead img { border: 2px solid #F00; opacity: 0.5; }
+#container { position: relative; background: #000; overflow: hidden; border-radius: 7px; cursor: crosshair }
+	#world-back { background: url(img/world-back.jpg); z-index: 0; position: absolute; width: 100%; height: 100%; opacity: 1 }
+	#world-shadow { background: url(img/world-shadow.png); z-index: 3; position: absolute; width: 1300px; height: 650px; opacity: 0.5 }
+	#world-front { background: url(img/world-front.png); z-index: 10; position: absolute; width: 100%; height: 100%; opacity: 1; border-radius: 7px; }
+	#world-light { position: absolute; z-index: 15; width: 250px; height: 250px; opacity: 0.45; background-image: url(img/world-ligth-front.png); border-radius: 50%; }
+	#me { position: absolute; z-index: 7 }
+	#canvas { z-index: 4; position: absolute}
+#subcontainer { position: relative; padding: 15px 0; }
+	.lazerlevel { background: rgba(255, 55, 190, 0.2); position: absolute; width: 0; left: 0; height: 4px; top: 5px; border-radius: 2px; }
+	#subcontainer .btn { float: right }
+#howtoplay > p { width: 380px; text-align: left; margin: auto }
+	.btn { text-align: center; border-radius: 7px; line-height: 25px; min-width: 12px; display: inline-block; font-size: 11px; padding: 0 10px; margin: 0 2px; cursor: pointer }
+	.btn { border: 1px solid #aaa; color: #aaa; text-decoration: none; }
+#msgwrite { width: 100%; text-align: center; background: transparent; border: none; color: #eee; font-size: 12px; margin-top: 90px; }
+#mailbox { width: 1000px; color: #888; float: left; overflow: hidden }
+	#mailbox .user { display: block; clear: both; margin-bottom: 7px; width: 100%; border-radius: 7px; background: rgba(255,0,0,0.02) }
+	#mailbox .user img { margin-right: 7px; }
+
+
+
+.other { position: absolute; width: 30px; height: 40px; background: url(img/others.png); z-index: 25 }
+.sprite { position: absolute; z-index: 30 }
+.deadUnit { background: rgba(255, 0, 0, 0.5); width: 15px; height: 15px; box-shadow: 0 0 25px 25px rgba(255, 0, 0, 0.5); position: absolute; z-index: 55; border-radius: 15px; }
+.message { position: absolute; z-index: 60; background: rgba(0,0,0,0.5); top:0;left:0;right:0;bottom:0; line-height: 35px; text-align: center; padding-top: 200px; display: none; }
+
+.white { background: #fff; color: #222; }
+
+#help { width: 545px; margin: 50px auto; font-size: 13px; }
+#help .title { padding-bottom: 9px; margin: 40px 0 20px; border-bottom: 1px solid #eee; color: #333; }
+#help img { background-color: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 4px; }
+#help p { line-height: 22px; margin-bottom: 15px; }
+#help .btn { margin-top: 30px; border-color: #333; color: #555 }
+#help .btn:hover { background: #eee }

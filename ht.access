@@ -1,0 +1,23 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule /?([A-Za-z]+)/?$ index.php?module=$1 [QSA,L]
+	#RewriteRule .* index.php [L]
+</IfModule>
+
+<IfModule mod_setenvif.c>
+	<IfModule mod_headers.c>
+		BrowserMatch chromeframe gcf
+		Header append X-UA-Compatible "chrome=1" env=gcf  
+	</IfModule>
+</IfModule>
+
+<Files database.json>
+	deny from all
+</Files>
+
+Options -Indexes

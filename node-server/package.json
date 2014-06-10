@@ -1,0 +1,9 @@
+{
+  "name": "dH game",
+  "version": "1.0.0",
+  "description": "socket.io app",
+  "dependencies": {
+    "socket.io": "~1.0.2",
+    "express": "~3.4.6"
+  }
+}
