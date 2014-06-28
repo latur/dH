@@ -57,9 +57,16 @@ function auth(){
 }
 
 // Главная страница
-function main(){
+function main($mapid = 'first'){
 	$user = find(@$_COOKIE['u']);
 	if($user){
+		// Список карт:
+		$maps = file_get_contents('client/maps/config.json');
+		$maps = str_replace("/",'\\/',$maps);
+		$maps = json_decode($maps);
+		$mapid = @$maps->{$mapid} ? $mapid : 'first';
+
+		// Данные для вторизации NODE.JS
 		$auth = array(
 			'id' => $user->id,
 			'name' => json_encode($user->name),
@@ -67,18 +74,32 @@ function main(){
 			'photo' => $user->photo,
 			'auth_key' => md5(uniqid('chat', true)),
 			'tm' => time(),
+			'map' => $mapid
 		);
 		$auth['sig'] = signature($auth);
-		
+
+		// Последние сообщения 
 		$saved = explode("\n", file_get_contents('messages.json'));
 		$messages = array();
 		foreach($saved as $e) if($e != '') $messages[] = json_decode($e);
-		
+
+		// Информация о карте
+		$map  = $maps->{$mapid};
+
 		include 'views/main.php';
 		exit;
 	}
 	include 'views/login.php';
 }
+
+// Выбрать карту
+function maps(){
+	$user = find(@$_COOKIE['u']);
+	if(!$user) return auth();
+	include 'views/maps.php';
+	exit;
+}
+
 
 // Выход из системы
 function quit(){

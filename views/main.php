@@ -34,14 +34,14 @@
 			<a class="btn logout" href="/exit">выйти</a> <a class="btn howtoplay" >как играть?</a>
 		</div>
 	</div>
-	<? $initpoints = array('[1134, 120]', '[563, 162]', '[83, 80]'); ?>
 	<script type="text/javascript">
-		var initpoint = <?=$initpoints[rand(0,count($initpoints) - 1)]?>;
-		var connection = 'http://mazepa.us:8967/?<?=http_build_query($auth)?>';
+		var map = <?=json_encode($map)?>;
+		var initpoint  = <?=json_encode($map->points[rand(0, count($map->points) - 1)])?>;
+		var connection = '<?=(WS.'?'.http_build_query($auth))?>';
 		var me = { name : '<?=json_decode($auth['name'])?>', photo : '<?=$auth['photo']?>', id : '<?=$auth['id']?>' };
 	</script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="http://mazepa.us:8967/socket.io/socket.io.js"></script>
-	<script src="client/app.js"></script>
+	<script src="<?=WS?>socket.io/socket.io.js"></script>
+	<script src="/client/app.js"></script>
 </body>
 </html>

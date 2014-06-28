@@ -1,10 +1,10 @@
 <?php
-$module = isset($_GET['module']) ? strtolower($_GET['module']) : 'main';
-if(preg_match('/[^a-z]/', $module)) $module = 'main';
+$req = explode('/', str_replace('?', '/', $_SERVER['REQUEST_URI']));
 
-switch($module){
-	case 'exit': quit(); break;
-	case 'main': main(); break;
-	case 'auth': auth(); break;
-	default: die('<pre>1≠0'); break;
+switch($req[1]){
+	case 'exit': quit(); break; // Выйти
+	case 'maps': maps(); break; // Список карт
+	case 'main': main(@$req[2]); break; // Игра
+	case 'auth': auth(@$req[2]); break; // Страница входа
+	default:     main(); break;
 }

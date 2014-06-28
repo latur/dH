@@ -1,0 +1,26 @@
+{
+	"first" : {
+		"oUser"  : "/client/maps/1/opacity-unit.map.json",
+		"oLaser" : "/client/maps/1/opacity-lazer.map.json",
+		"back"   : "/client/maps/1/w-back.jpg",
+		"front"  : "/client/maps/1/w-front.png",
+		"light"  : "/client/maps/1/w-light.png",
+		"shadow" : "/client/maps/1/w-shadow.png",
+		"points" : [[1134, 120], [563, 162], [83, 80]],
+		"ports"  : [[[955,590],[1160,110]], [[75,515],[740,18]]],
+		"chat"   : "/client/maps/1/messages.json",
+		"deads"  : "/client/maps/1/deadpoints.json"
+	},
+	"dream" : {
+		"oUser"  : "/client/maps/2/opacity-unit.map.json",
+		"oLaser" : "/client/maps/2/opacity-lazer.map.json",
+		"back"   : "/client/maps/2/w-back.jpg",
+		"front"  : "/client/maps/2/w-front.png",
+		"light"  : "/client/maps/2/w-light.png",
+		"shadow" : "/client/maps/2/w-shadow.png",
+		"points" : [[90, 50], [350, 40]],
+		"ports"  : [[[1175,535],[90,70]], [[1165,210],[210,30]], [[615,590],[750,30]]],
+		"chat"   : "/client/maps/2/messages.json",
+		"deads"  : "/client/maps/2/deadpoints.json"
+	}
+}

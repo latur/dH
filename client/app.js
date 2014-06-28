@@ -1,12 +1,12 @@
 var options = {
 	frame  : { width : 1200, height : 600 },
-	hero   : { width : 17,   height : 29, sprite : 'client/img/mario.png' },
-	map    : $('#world-shadow'),
-	back   : $('#world-back'),
-	light  : $('#world-light'),
+	hero   : { width : 17,   height : 29, sprite : '/client/img/mario.png' },
+	front  : $('#world-front').css({ backgroundImage :  'url(' + map.front  + ')' }),
+	map    : $('#world-shadow').css({ backgroundImage : 'url(' + map.shadow + ')' }),
+	back   : $('#world-back').css({ backgroundImage :   'url(' + map.back   + ')' }),
+	light  : $('#world-light').css({ backgroundImage :  'url(' + map.light  + ')' }),
 	level  : $('div.lazerlevel'),
-	canvas : $('#canvas'),
-	ports  : [ [[955,590],[1160,110]], [[75,515],[740,18]] ]
+	canvas : $('#canvas')
 };
 
 
@@ -31,17 +31,17 @@ var action = (function(e){
 
 	var sounds = {
 		'boom' : [	
-			new Audio('client/sounds/boom-1.wav'),
-			new Audio('client/sounds/boom-2.wav'),
-			new Audio('client/sounds/boom-3.wav'),
-			new Audio('client/sounds/boom-4.wav'),
-			new Audio('client/sounds/boom-5.wav'),
-			new Audio('client/sounds/boom-6.wav'),
-			new Audio('client/sounds/boom-7.wav'),
-			new Audio('client/sounds/boom-8.wav'), 
+			new Audio('/client/sounds/boom-1.wav'),
+			new Audio('/client/sounds/boom-2.wav'),
+			new Audio('/client/sounds/boom-3.wav'),
+			new Audio('/client/sounds/boom-4.wav'),
+			new Audio('/client/sounds/boom-5.wav'),
+			new Audio('/client/sounds/boom-6.wav'),
+			new Audio('/client/sounds/boom-7.wav'),
+			new Audio('/client/sounds/boom-8.wav'), 
 		],
-		'up' : new Audio('client/sounds/up.wav'), 
-		'spark' : new Audio('client/sounds/spark.wav'), 
+		'up' : new Audio('/client/sounds/up.wav'), 
+		'spark' : new Audio('/client/sounds/spark.wav'), 
 
 	};
 	
@@ -144,7 +144,7 @@ var action = (function(e){
 	function explosion(point)
 	{
 		var x = point[0], y = point[1];
-		var exp = 'client/img/exp.64.png';
+		var exp = '/client/img/exp.64.png';
 		$("#container").append('<div class="sprite"></div>');
 		var area = $("#container .sprite:last");
 		area.css({ width : 64, height : 64, top : y - 64/2, left : x - 64/2, backgroundImage : 'url(' + exp + ')'});
@@ -178,7 +178,7 @@ var action = (function(e){
 			agent.e.remove();
 			e.light.remove();
 			$('a.howtoplay').remove();
-			$('<div class="message">Вас уничтожили.  Убийца — '+ users[killer].name +'<br/><a href="/" class="btn">перерождение</a></div>')
+			$('<div class="message">Вас уничтожили.  Убийца — '+ users[killer].name +'<br/><a href="'+location.href+'" class="btn">перерождение</a></div>')
 				.appendTo('#container')
 				.fadeIn(1500);
 		}
@@ -242,10 +242,10 @@ var action = (function(e){
 		agent.y += e.hero.height;
 		
 		// Телепортация?
-		for (var p in e.ports){
-			if(agent.x > e.ports[p][0][0] - 10 && agent.x < e.ports[p][0][0] + 10 && agent.y > e.ports[p][0][1] - 10 && agent.y < e.ports[p][0][1] + 10){
-				agent.x = e.ports[p][1][0];
-				agent.y = e.ports[p][1][1];
+		for (var p in map.ports){
+			if(agent.x > map.ports[p][0][0] - 10 && agent.x < map.ports[p][0][0] + 10 && agent.y > map.ports[p][0][1] - 10 && agent.y < map.ports[p][0][1] + 10){
+				agent.x = map.ports[p][1][0];
+				agent.y = map.ports[p][1][1];
 				return false;
 			}
 		}
@@ -366,7 +366,7 @@ var action = (function(e){
 		e.ctx = e.canvas[0].getContext("2d");
 		
 		// Вставка чатико-соощений
-		$.post('client/messages.json', {}, function(e){ e = e.slice(-10); for(var i in e) incoming(e[i]); }, "json")
+		$.post(map.chat, {}, function(e){ e = e.slice(-10); for(var i in e) incoming(e[i]); }, "json");
 		$('a.howtoplay').hover(function(){ $('#howtoplay').fadeIn(100); }, function(){ $('#howtoplay').fadeOut(100); })
 	}
 
@@ -402,5 +402,5 @@ var action = (function(e){
 	});
 	
 	// Получение карты проницаемости, запуск
-	$.post('client/opacity-unit.map.json', {}, function(e){ opacity_map = e; init(); });
+	$.post(map.oUser, {}, function(e){ opacity_map = e; init(); });
 })(options);
