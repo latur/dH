@@ -9,8 +9,12 @@ var options = {
 	canvas : $('#canvas')
 };
 
-
-//client/sounds/spark.wav
+// Статистика смертей: 
+function Deads(){
+	$.post(map.deads, '', function(e){ 
+		for(var i in e) $('<div class="deadUnit"></div>').css({ top: e[i][2][1], left : e[i][2][0], opacity : 0.4}).appendTo('#container'); 
+	});
+}
 
 var action = (function(e){
 	var socket = io.connect(connection);
@@ -100,34 +104,33 @@ var action = (function(e){
 	// Проекция персонажей иных измерений
 	function makeOthers(points)
 	{
-		sounds['spark'].play();
-		// if(points.length == 0) return;
 		for(var i in points) $('<div class="other e"></div>').css({ left : points[i][0], top: points[i][1], opacity : i/points.length }).appendTo('#container');
-		// Гасим пользователей фоновых
-		$('.other.e').removeClass('e').animate({ opacity : 0 }, 5000, function(){ $(this).remove(); });
-		// Скрываем стену
-		backOpacity = 0;
 	}
 	// Отрисовка линнии-лазера
 	function fireline(point, init, isme)
 	{
 		// Радиус луча
 		var ro  = Math.round(Math.sqrt( (init[0] - point[0])*(init[0] - point[0]) + (init[1] - point[1])*(init[1] - point[1]) ));
+		// Начальная точка
+		var from = [init[0] + 15, init[1] + 15];
 		// Смещение со знаком
 		var zDX = (init[0] - point[0]) / ro, zDY = (init[1] - point[1])/ro;
-		// Начальная точка
-		var from = [init[0] + 10, init[1] + 10];
 		// Звуковое сопровождение
 		sounds['boom'][ isme ? (Math.floor(Math.random() * 6) + 1) : 0 ].play();
 
 		// 1. Проведение молниеобразной линии, анимационно
 		e.ctx.beginPath();
 		e.ctx.moveTo(from[0], from[1]);
-		e.ctx.strokeStyle = (isme) ? 'rgba(200,0,0,0.8)' : 'rgba(100,0,150,0.8)';
-		e.ctx.lineWidth = 2;
+		e.ctx.strokeStyle = (isme) ? 'rgba(250,0,0,0.8)' : 'rgba(100,0,250,0.8)';
+		e.ctx.lineWidth = 1;
 		for(var i = 0; 10*i < ro; i++){
-			var mx = [from[0] - zDX * 10 * i + Math.random() * 15 - 8, from[1] - zDY * 10 * i + Math.random() * 15 - 8];
+			//var mx = [from[0] - zDX * 10 * i + Math.random() * 15 - 8, from[1] - zDY * 10 * i + Math.random() * 15 - 8];
+			var mx = [from[0] - zDX * 10 * i + 0 - 8, from[1] - zDY * 10 * i + 0 - 8];
 			e.ctx.lineTo(mx[0], mx[1]);
+			e.ctx.lineTo(mx[0] + Math.random() * 15 - 8, mx[1] + Math.random() * 15 - 8);
+			e.ctx.lineTo(mx[0] + Math.random() * 15 - 8, mx[1] + Math.random() * 15 - 8);
+			e.ctx.lineTo(mx[0] + Math.random() * 15 - 8, mx[1] + Math.random() * 15 - 8);
+			e.ctx.lineTo(mx[0] + Math.random() * 15 - 8, mx[1] + Math.random() * 15 - 8);
 			e.ctx.moveTo(mx[0], mx[1]);
 		}
 		e.ctx.stroke();
@@ -137,10 +140,10 @@ var action = (function(e){
 			e.canvas.animate({ opacity : 0 }, 500, function(){ 
 				e.ctx.clearRect(0, 0, e.frame.width, e.frame.height);
 				$(this).css({ opacity : 1 }); 
-			})
+			});
 		}, 500);
 	}
-	// ВЗРЫВ
+	// ВЗРЫВ тут всё криво, не красиво, надо переделать
 	function explosion(point)
 	{
 		var x = point[0], y = point[1];
@@ -378,7 +381,11 @@ var action = (function(e){
 	});
 	// Пришёл ответ с местоположением людей:
 	socket.on('vedere', function(e){
+		sounds['spark'].play();
 		for (var id in e) if(id != me.id) makeOthers(e[id]);
+		$('.other.e').removeClass('e').animate({ opacity : 0 }, 5000, function(){ $(this).remove(); });
+		// Скрываем стену
+		backOpacity = 0;
 	});
 	// Пришёл ответ с проницаемостью выстрела
 	socket.on('fire', function(e){

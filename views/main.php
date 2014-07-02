@@ -31,7 +31,7 @@
 		<div id="subcontainer">
 			<div class="lazerlevel"></div>
 			<div id="mailbox"></div>
-			<a class="btn logout" href="/exit">выйти</a> <a class="btn howtoplay" >как играть?</a>
+			<a class="btn logout" href="/exit">выйти</a> <a class="btn" href="/">карты</a> <a class="btn howtoplay" >как играть?</a>
 		</div>
 	</div>
 	<script type="text/javascript">

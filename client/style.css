@@ -24,7 +24,7 @@ body { background: #111; font-family: 'Open Sans', sans-serif; font-size: 12px; 
 	.btn { text-align: center; border-radius: 7px; line-height: 25px; min-width: 12px; display: inline-block; font-size: 11px; padding: 0 10px; margin: 0 2px; cursor: pointer }
 	.btn { border: 1px solid #aaa; color: #aaa; text-decoration: none; }
 #msgwrite { width: 100%; text-align: center; background: transparent; border: none; color: #eee; font-size: 12px; margin-top: 90px; }
-#mailbox { width: 1000px; color: #888; float: left; overflow: hidden }
+#mailbox { width: 990px; color: #888; float: left; overflow: hidden }
 	#mailbox .user { display: block; clear: both; margin-bottom: 7px; width: 100%; border-radius: 7px; }
 	#mailbox .user img { margin-right: 7px; }
 
@@ -36,10 +36,11 @@ body { background: #111; font-family: 'Open Sans', sans-serif; font-size: 12px; 
 .message { position: absolute; z-index: 60; background: rgba(0,0,0,0.5); top:0;left:0;right:0;bottom:0; line-height: 35px; text-align: center; padding-top: 200px; display: none; }
 
 .white { background: #fff; color: #222; }
+.panel { position: absolute; top:0; right:0 }
 
 #help { width: 545px; margin: 50px auto; font-size: 13px; }
-#help .title { padding-bottom: 9px; margin: 40px 0 20px; border-bottom: 1px solid #eee; color: #333; }
-#help img { background-color: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 4px; margin-bottom: 30px; }
+#help .title { padding-bottom: 9px; margin: 40px 0 20px; border-bottom: 1px solid #eee; color: #333; line-height: 28px; position: relative; }
+#help img { background-color: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 4px; margin-bottom: 10px; }
 #help p { line-height: 22px; margin-bottom: 15px; }
 #help .btn { border-color: #333; color: #555 }
 #help .btn:hover { background: #eee }

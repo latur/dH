@@ -3,7 +3,7 @@
 // Массив пользователей, их фотографий, имён, id, сессий
 define('DB', 'database.json');
 // Ключ связки NODE-PHP
-define('SKEY', '99cc6451ed05');
+define('SKEY', '');
 define('HOME', 'http://relatur.tk/');
 define('WS',   'http://mazepa.us:8967/');
 
