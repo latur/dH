@@ -40,7 +40,7 @@
 		var connection = '<?=(WS.'?'.http_build_query($auth))?>';
 		var me = { name : '<?=json_decode($auth['name'])?>', photo : '<?=$auth['photo']?>', id : '<?=$auth['id']?>' };
 	</script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="<?=WS?>socket.io/socket.io.js"></script>
 	<script src="/client/app.js"></script>
 </body>

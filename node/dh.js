@@ -1,23 +1,30 @@
-var PORT = 8967;
-var SKEY = '';
-var ROOT = '/home/mathilde/www/relatur.tk';
-var MAPS = '/client/maps/config.json';
-var SIZE = [1200, 600];
+const options = { 'log level': 0, 'authorization': isAuth };
+const crypto  = require('crypto');
+const express = require('express');
+const app     = express();
+const fs      = require('fs');
+const https   = require('https');
+// -------------------------------------------------------------------------- //
+// Настроечки:
 
-var options = { 'log level': 0, 'authorization': isAuth };
+const PORT = 8967;
+const SKEY = ''; // Шифроключ для связи с PHP (авторизация)
+const ROOT = '/home/www/relatur.tk'; // Путь к корню проекта
 
-var crypto  = require('crypto');
-var express = require('express');
-var fs      = require('fs');
-var http    = require('http');
-var server  = http.createServer(app);
-var io      = require('socket.io').listen(server, options);
+const key  = fs.readFileSync('/crtx/relatur.tk.key'); // SSL key
+const cert = fs.readFileSync('/crtx/relatur.tk.crt'); // SSL cert
 
-var bot     = require('./n-bot.js');
+// -------------------------------------------------------------------------- //
+
+const MAPS = '/client/maps/config.json';
+const SIZE = [1200, 600];
+const server = https.createServer({ key: key, cert: cert, requestCert: false, rejectUnauthorized: false }, app);
+
+const io = require('socket.io').listen(server, options);
+const bot = require('./n-bot.js');
 
 // ------------------------------------------------------------------------------------------------------------------------ //
 // Статика:
-var app = express();
 app.use('/static', express.static(__dirname + '/static'));
 app.get('/', function (req, res) { res.sendfile(__dirname + '/index.html'); });
 server.listen(PORT);
@@ -42,7 +49,7 @@ for(var mapid in map_info){
 var DreamBotFP = [rand(0, SIZE[0]), rand(0, SIZE[1])];
 // Создание ботов:
 // - Граф перемещений
-var trace_file = '/home/mathilde/node/n-game/bot_traces/dream.json';
+var trace_file = './bot_traces/dream.json';
 var trace = JSON.parse( fs.readFileSync(trace_file, {encoding: 'utf-8'}) );
 // - Бот в карте «Мечта»
 var DreamBot = new bot('dream', 'Робот Крушитель', '/client/img/robot.jpg', trace);
@@ -107,13 +114,14 @@ setInterval(function(){
 // ------------------------------------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------------------------------------ //
 io.sockets.on('connection', function (client) {
-	var id  = client.handshake.id;
-	var map = client.handshake.map;
-	client.join(map);
+    
+	var id  = client.handshake.query.id;
+	var map = client.handshake.query.map;
 
+	client.join(map);
 	clients[map][id] = {
-		'img'     : client.handshake.photo,	
-		'name'    : client.handshake.full_name,
+		'img'     : client.handshake.query.photo,	
+		'name'    : JSON.parse(client.handshake.query.full_name),
 		'id'      : id,
 		'life'    : true,
 		'points'  : [0,0], // Координаты пользователея

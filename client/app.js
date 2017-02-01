@@ -17,7 +17,7 @@ function Deads(){
 }
 
 var action = (function(e){
-	var socket = io.connect(connection);
+	var socket = io.connect(connection,  {secure: true});
 	// Цикл переотрисовки сцены
 	var	draw_scene;
 	// Главный герой, его ускорение, количество жизней
@@ -42,7 +42,6 @@ var action = (function(e){
 			new Audio('/client/sounds/boom-5.wav'),
 			new Audio('/client/sounds/boom-6.wav'),
 			new Audio('/client/sounds/boom-7.wav'),
-			new Audio('/client/sounds/boom-8.wav'), 
 		],
 		'up' : new Audio('/client/sounds/up.wav'), 
 		'spark' : new Audio('/client/sounds/spark.wav'), 
@@ -233,6 +232,7 @@ var action = (function(e){
 	function updateUserlist()
 	{
 		$('#users').html('');
+		console.log(users);
 		for(var uid in users)
 		$('#users').append('<div class="user'+ ((users[uid].life) ? '' : ' dead') +'">' + 
 			'<img src="' + users[uid].img + '" title="' + users[uid].name + '" /></div>');
@@ -369,7 +369,7 @@ var action = (function(e){
 		e.ctx = e.canvas[0].getContext("2d");
 		
 		// Вставка чатико-соощений
-		$.post(map.chat, {}, function(e){ e = e.slice(-10); for(var i in e) incoming(e[i]); }, "json");
+		$.post(map.chat, {}, function(e){ e = e.slice(-4); for(var i in e) incoming(e[i]); }, "json");
 		$('a.howtoplay').hover(function(){ $('#howtoplay').fadeIn(100); }, function(){ $('#howtoplay').fadeOut(100); })
 	}
 

@@ -4,15 +4,15 @@
 define('DB', 'database.json');
 // Ключ связки NODE-PHP
 define('SKEY', '');
-define('HOME', 'http://relatur.tk/');
-define('WS',   'http://mazepa.us:8967/');
+define('HOME', 'https://relatur.tk/');
+define('WS',   'https://relatur.tk:8967/');
 
 
 // Настройки OAUTH:
 // Скрипт авторизации
 $redirect = HOME . 'auth';
 // ID приложения
-$vk_appid = '';
+$vk_appid = '4560732';
 // Ключ приложения
 $vk_rcode = '';
 // Запрос прав приложения: 

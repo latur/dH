@@ -1,5 +1,5 @@
 {
-  "name": "dH game",
+  "name": "dH-Game",
   "version": "1.0.0",
   "description": "socket.io app",
   "dependencies": {
